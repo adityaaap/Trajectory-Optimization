@@ -24,8 +24,14 @@ class MinimumSnap:
     def generateTrajectroy(self):
         self.computeSplineParameters()
 
-    def computeSplineParameters(self):
+    def computeSplineParameters(self,method):
         self.createPolyMatrices()
+        if(method == 'lstq'):
+            self.coeffs,_,_ = np.linalg.lstsq(self.A, self.B, rcond=None)
+        else:
+            self.coeffs = np.linalg.solve(self.A, self.B)
+
+
     
 
     def createPolyMatrices(self):

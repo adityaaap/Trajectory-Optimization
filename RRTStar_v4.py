@@ -24,7 +24,7 @@ class RRTStar:
         self.stepSize = max_distance
         self.neighbourRadius = 1.1 * self.maxDistance
         self.epsilon = 0.3
-        self.currSample = FileNotFoundError
+        self.currSample = None
 
         self.bestPath = None
         self.bestTree = None
@@ -226,13 +226,18 @@ class RRTStar:
         return np.array(path[::-1]).reshape(-1, 3), cost
     
     def store_best_tree(self):
-        
-        # Have a Deep copy
+        """
+        Update the best tree with the current tree if the cost is lower
+        """
+        # deepcopy is very important here, otherwise it is just a reference. copy is enough for the
+        # dictionary, but not for the numpy arrays (values of the dictionary) because they are mutable.
         self.bestTree = copy.deepcopy(self.tree)
 
     @staticmethod
     def path_cost(path):
-        
+        """
+        Calculate the cost of the path
+        """
         cost = 0
         for i in range(len(path) - 1):
             cost += np.linalg.norm(path[i + 1] - path[i])
@@ -330,7 +335,7 @@ if __name__ == "__main__":
         space_limits,
         start=start,
         goal=goal,
-        max_distance=4,
+        max_distance=3,
         max_iterations=1000,
         obstacles=None,
     )

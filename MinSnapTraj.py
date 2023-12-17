@@ -30,7 +30,7 @@ class MinimumSnap:
 
     def createPolyMatrices(self):
         self.setup()
-        self.positionContraints()
+        self.positionConstraints()
         self.startGoalConstraints()
         self.continuityConstraints()
 

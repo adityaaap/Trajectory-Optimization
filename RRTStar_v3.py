@@ -1,30 +1,22 @@
 import numpy as np
 import copy
 import time
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
-######################## KEY PARAMS ##########################
-# 1. non-integer nodes
-# 2. goal biasing for goal 
-# 3. in ifPathFound - directly check if goal key is present in 
-# 4. getPath - path = [] starts with self.goal Node hence, a key for self.goal is necessary
 
 class RRTStar:
     def __init__(self, spaceLimits, start, goal, max_distance, max_iterations, obstacles = None):
-        self.start = start
-        self.goal = goal
+        self.start = np.round(start,2)
+        self.goal = np.round(goal,2)
         self.goalError = np.array([goal[0]-0.05, goal[1] - 0.05, goal[2] - 0.05]) # AN ERROR IS GIVEN, SO THAT WE CAN KEEP A PROBABILITY OF SAMPLING THIS ERROR GOAL POINT
         self.maxIterations = max_iterations
-        self.maxDistance = max_distance
+        # self.maxDistance = max_distance
         self.lower = spaceLimits[0]
         self.upper = spaceLimits[1]
         self.allNodes = [self.start]
         self.tree = {} # Edges
         self.stepSize = max_distance
-        self.neighbourRadius = 1.1 * self.maxDistance
-        self.epsilon = 0.3
-        self.currSample = FileNotFoundError
+        self.neighbourRadius = 1.5 * max_distance
+        self.epsilon = 0.15
+        self.currSample = None
 
         self.bestPath = None
         self.bestTree = None
@@ -35,8 +27,8 @@ class RRTStar:
 
     def updateTree(self, node, newNode):
         self.allNodes.append(newNode)
-        key = str(newNode.tolist())
-        parent = node
+        key = str(np.round(newNode,2).tolist())
+        parent = np.round(node,2)
         if(not np.array_equal(newNode, node)):
             self.tree[key] = parent
         # print("all nodes", self.allNodes)
@@ -44,14 +36,14 @@ class RRTStar:
 
     def generateNode(self):
         # with probability epsilon, sample the goal
-        if np.random.uniform(0, 1) < self.epsilon:
-            return self.goal
+        # if np.random.uniform(0, 1) < self.epsilon:
+        #     return self.goal
         
         x = (np.random.uniform(self.lower[0], self.upper[0]))
         y = (np.random.uniform(self.lower[1], self.upper[1]))
         z = (np.random.uniform(self.lower[2], self.upper[2]))
 
-        randomNode = np.round(np.array([x,y,z]),2)
+        randomNode = np.round(np.array([x, y, z]), 2)
 
         return randomNode
 
@@ -80,18 +72,24 @@ class RRTStar:
 
         distance_nearest = np.linalg.norm(newNode - nearestNode)
         if distance_nearest > self.stepSize:
-            new_node = nearestNode + (newNode - nearestNode) * self.stepSize / distance_nearest
-            newNode = np.round(new_node, 2)
+            newNode = nearestNode + (newNode - nearestNode) * self.stepSize / distance_nearest
+            newNode = np.round(newNode, 2)
         return newNode
 
     def validNeighbours(self, newNode):
-        neighbours = []
-        for node in self.allNodes:
-            if(np.linalg.norm(node - newNode) <= self.neighbourRadius):
-                if(self.validConnection(node, newNode)):
-                    neighbours.append(node)
+        # neighbours = []
+        # for node in self.allNodes:
+        #     if(np.linalg.norm(node - newNode) <= self.neighbourRadius):
+        #         if(self.validConnection(node, newNode)):
+        #             neighbours.append(node)
         
-        return neighbours
+        # return neighbours
+        neighbors = []
+        for node in self.allNodes:
+            node_in_radius = np.linalg.norm(node - newNode) <= self.neighbourRadius
+            if node_in_radius and self.validConnection(node, newNode):
+                neighbors.append(node)
+        return neighbors
 
     def validConnection(self, node, newNode):
         if(self.obstacles is None):
@@ -144,7 +142,7 @@ class RRTStar:
         return False
 
     def isPathFound(self, tree, newNode):
-        # startTime = time.time()
+        startTime = time.time()
         # distance = []
         # # print(self.allNodes)
         # for item in self.allNodes:
@@ -154,7 +152,7 @@ class RRTStar:
         # print(min(distance))
         
         # for i in range(len(distance)):
-        #     if(distance[i] < 4):
+        #     if(distance[i] < 3):
                 
         #         node = self.allNodes[i]
         #         goal_node_key = str(self.goal.tolist())
@@ -166,27 +164,20 @@ class RRTStar:
         
         #####################################
         # print('path found')
-        # if(np.array_equal(self.currSample, self.goal)):
-        #     goal_node_key = str(np.round(self.goal, 2).tolist())
-        #     print(self.allNodes)
-        #     print("All Nodes",self.allNodes[-2])
-        #     self.tree[goal_node_key] = self.allNodes[-2]
-        #     print(self.tree)
-        #     return True    
 
-        goal_node_key = str(np.round(self.goal, 2).tolist())
-        return goal_node_key in tree.keys()
-        # print(self.tree)
-        # goal_node_key = str(np.round(self.goal, 2).tolist())
-        # endTime = time.time()
-        # print('Time to run pathFound', endTime - startTime)
+        # goal_node_key = str(np.round(self.goalError, 2).tolist())
         # return goal_node_key in tree.keys()
+        # print(self.tree)
+        goal_node_key = str(np.round(self.goal, 2).tolist())
+        endTime = time.time()
+        print('Time to run pathFound', endTime - startTime)
+        return goal_node_key in tree.keys()
 
         ###################################### WORKS ALL CASES BUT IS SLOW, BECAUSE IT IS BASED ON DISTANCE
         # dist = np.linalg.norm(newNode - self.goal)
         # # print(dist)
         # if(dist < 3):
-        #     goalKey = str(np.round(self.goal,2).tolist())
+        #     goalKey = str(self.goal.tolist())
         #     tree[goalKey] = newNode
         #     print('path found')
         #     return True
@@ -226,13 +217,18 @@ class RRTStar:
         return np.array(path[::-1]).reshape(-1, 3), cost
     
     def store_best_tree(self):
-        
-        # Have a Deep copy
+        """
+        Update the best tree with the current tree if the cost is lower
+        """
+        # deepcopy is very important here, otherwise it is just a reference. copy is enough for the
+        # dictionary, but not for the numpy arrays (values of the dictionary) because they are mutable.
         self.bestTree = copy.deepcopy(self.tree)
 
     @staticmethod
     def path_cost(path):
-        
+        """
+        Calculate the cost of the path
+        """
         cost = 0
         for i in range(len(path) - 1):
             cost += np.linalg.norm(path[i + 1] - path[i])
@@ -242,7 +238,7 @@ class RRTStar:
     def run(self):
         old_cost = np.inf
         for i in range(self.maxIterations):
-            # print("iteration",i)
+            print("iteration",i)
             # newNode = self.generateNode()
             node = self.generateNode()
             
@@ -254,11 +250,10 @@ class RRTStar:
             # print(neighbours)
 
             if(len(neighbours) == 0): continue
-
+            print("here in iteration", i)
             bestNeighbour = self.bestNeighbour(neighbours)
             # print(bestNeighbour)
             self.updateTree(bestNeighbour, self.currSample)
-            # self.updateTree(nearestNode, self.currSample)
             hasRewired = self.rewire(neighbours, self.currSample)
             # print('here')
             if(self.isPathFound(self.tree, self.currSample)):
@@ -293,36 +288,11 @@ class RRTStar:
         print("\nBest path found with cost: {}".format(cost))
         # print(self.bestPath)
 
-    def plot(self):
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        # tree = list(self.bestPath.values())  # Extract values from the dictionary
-        tree = self.bestPath
-        tree = np.array(tree) 
-
-        # print(tree)
-        # Extracting x, y, z coordinates from the array
-        x = tree[:, 0]
-        y = tree[:, 1]
-        z = tree[:, 2]
-
-        # Plotting the points
-        # ax.scatter(x, y, z)
-        for i in range(len(tree) - 1):
-            ax.plot([x[i], x[i + 1]], [y[i], y[i + 1]], [z[i], z[i + 1]], color='blue')
-
-        # Set labels
-        ax.set_xlabel('X axis')
-        ax.set_ylabel('Y axis')
-        ax.set_zlabel('Z axis')
-
-        plt.show()
-
 
 if __name__ == "__main__":
 
     start = np.array([0, 0, 0])
-    goal = np.array([7.0*10, 7.0*10, 7.0*10]) # Dont keep goal as integer values
+    goal = np.array([7*10, 7*10, 7*10]) # Dont keep goal as integer values
 
     space_limits = np.array([[0., 0., 0.9], [100., 100., 100.]])
 
@@ -330,10 +300,8 @@ if __name__ == "__main__":
         space_limits,
         start=start,
         goal=goal,
-        max_distance=4,
+        max_distance=3,
         max_iterations=1000,
         obstacles=None,
     )
     rrt.run()
-    rrt.plot()
-

@@ -18,14 +18,20 @@ class MinimumSnap:
         self.completeTraj = None
 
     def getTrajectory(self):
-        self.generateTrajectory()
+        self.generateTrajectroy()
         return self.completeTraj
     
-    def generateTrajectroy(self):
-        self.computeSplineParameters()
+    def generateTrajectroy(self, method = "lstq"):
+        self.computeSplineParameters(method)
 
-    def computeSplineParameters(self):
+    def computeSplineParameters(self,method):
         self.createPolyMatrices()
+        if(method == 'lstq'):
+            self.coeffs,_,_ = np.linalg.lstsq(self.A, self.B, rcond=None)
+        else:
+            self.coeffs = np.linalg.solve(self.A, self.B)
+
+
     
 
     def createPolyMatrices(self):

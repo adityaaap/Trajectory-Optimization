@@ -71,6 +71,15 @@ class MinimumSnap:
 
     
     def continuityConstraints(self):
+        for i in range(self.noSplines):
+            time = self.time[i-1]
+            for k in [1,2,3,4]:
+                poly0 = MinimumSnap.generatepolynomial(self.n_coeffs, order=k,t=0)
+                polyT = MinimumSnap.generatepolynomial(self.n_coeffs, order=k,t=time)
+                
+                self.A[self.rowCounter, (i-1) * self.n_coeffs: (i+1) * self.n_coeffs] = np.hstack(polyT,poly0)
+                self.rowCounter += 1
+
 
     def initMatrices(self):
         self.A = np.zeros((self.n_coeffs * self.noSplines, self.n_coeffs * self.noSplines))

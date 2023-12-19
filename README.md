@@ -13,7 +13,7 @@ python3 main.py
 # Results of Path Planning 
 A scatter plot of the way points generated using RRT* algorithm
 
-![image](https://drive.google.com/file/d/13hzaMEveTk21t-GOhEhtUF0_kCLyMJuv/view?usp=sharing)
+(https://drive.google.com/file/d/13hzaMEveTk21t-GOhEhtUF0_kCLyMJuv/view?usp=sharing)
 
 ![image](https://drive.google.com/file/d/1wAS8bFNhBlZL0Zm2emnuDk1oBNZijU4a/view?usp=sharing)
 

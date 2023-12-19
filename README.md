@@ -13,14 +13,14 @@ python3 main.py
 # Results of Path Planning 
 A scatter plot of the way points generated using RRT* algorithm
 
-(https://drive.google.com/file/d/13hzaMEveTk21t-GOhEhtUF0_kCLyMJuv/view?usp=sharing)
+![image](https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning1.png)
 
-![image](https://drive.google.com/file/d/1wAS8bFNhBlZL0Zm2emnuDk1oBNZijU4a/view?usp=sharing)
+![image]((https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning%20results%202.png))
 
 # Results of Trajectory Optimization
 A plot of smoothened trajectory around the obstacle to the goal
 
-![image](https://drive.google.com/file/d/1ylc_94WmT9VfcKlrZFoY2b7yAxJgdRm9/view?usp=sharing)
+![image](https://github.com/adityaaap/RRT_Star/blob/master/images/Traj%20Optim%20results%201.png)
 
-![image](https://drive.google.com/file/d/18DnEh0IaQQsJw4Lm1UqTwIv-XAQxF4Y_/view?usp=sharing)
+![image](https://github.com/adityaaap/RRT_Star/blob/master/images/traj%20optim%20results%202.png)
 

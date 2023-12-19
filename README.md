@@ -24,8 +24,11 @@ A plot of smoothened trajectory around the obstacle to the goal
 
 ![image](https://github.com/adityaaap/RRT_Star/blob/master/images/traj%20optim%20results%202.png)
 
-# MIT VNAV Course Lecture PDF
+# Notes
+A lecture PDF from MIT VNAV course on Trajectory Optimization is a very useful resource for trajectory optimization
 Link - https://vnav.mit.edu/material/09-TrajectoryOptimization1-notes.pdf
+
+The PDF notes posted by me in the repo explain how the theory from above lecture has been used in this problem formulation and also the code structure associated with it
 
 
 References:

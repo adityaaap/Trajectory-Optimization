@@ -228,6 +228,7 @@ class RRTStar:
     def store_best_tree(self):
         
         # Have a Deep copy
+        
         self.bestTree = copy.deepcopy(self.tree)
 
     @staticmethod

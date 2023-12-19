@@ -235,6 +235,7 @@ class MinimumSnap:
         for _ in range(order):
             for j in range(noCoeffs):
                 poly[j] = poly[j] * deri[j]
+                
                 if(deri[j] > 0):
                     deri[j] = deri[j] - 1
         

@@ -43,6 +43,7 @@ print(positions)
 ######### PLOTTING #########
 
 #### Path Plan Plotting ####
+
 rrt.plot()
 
 

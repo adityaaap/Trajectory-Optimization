@@ -1,7 +1,11 @@
 from matplotlib import pyplot as plt
+
 # from RRTStar_FromUAV import RRTStar
 from RRTStar_forTrajOptim import RRTStar
-from MinSnapTraj_FromUAV import MinimumSnap
+
+# from MinSnapTraj_FromUAV import MinimumSnap
+from MinSnapTraj import MinimumSnap
+
 import numpy as np
 
 start = np.array([0, 0, 0])
@@ -13,23 +17,35 @@ rrt = RRTStar(
     space_limits,
     start=start,
     goal=goal,
-    max_distance=5,
+    max_distance=2,
     max_iterations=1000,
     obstacles=None,
 )
 
+####### Path Planning ########
 # rrt = RRTStar(space_limits, start, goal, max_distance, max_iterations, obstacles)
 rrt.run()
 global_path = rrt.bestPath  # long-term path
-print(global_path)
+# print(global_path)
 
+####### Trajectory Optimization ######
+print("start traj optim")
 min_snap = MinimumSnap(global_path, obstacles=None, velocity=2, dt=0.1)
-global_trajectory = min_snap.get_trajectory()  # long-term trajectory
+
+# global_trajectory = min_snap.get_trajectory()
+global_trajectory = min_snap.getTrajectory()  # long-term trajectory
+
 positions = min_snap.positions
-# print(positions)
+print(positions)
 
-# rrt.plot()
 
+######### PLOTTING #########
+
+#### Path Plan Plotting ####
+rrt.plot()
+
+
+#### Trajectory Optimization Plot ####
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 # tree = list(self.bestPath.values())  # Extract values from the dictionary

@@ -57,6 +57,7 @@ class MinimumSnap:
     def generateTrajectroy(self, method = "lstq"):
         self.computeSplineParameters(method)
 
+
         # generate trajectory points at step size of dt
         for i in range(self.noSplines):
             time = self.time[i]
@@ -82,6 +83,15 @@ class MinimumSnap:
             self.coeffs,_,_,_ = np.linalg.lstsq(self.A, self.B, rcond=None)
         else:
             self.coeffs = np.linalg.solve(self.A, self.B)
+
+    def computeSplineParameters(self,method):
+        self.createPolyMatrices()
+        if(method == 'lstq'):
+            self.coeffs,_,_,_ = np.linalg.lstsq(self.A, self.B, rcond=None)
+        else:
+            self.coeffs = np.linalg.solve(self.A, self.B)
+
+
 
 
     def createPolyMatrices(self):
@@ -235,7 +245,7 @@ class MinimumSnap:
         for _ in range(order):
             for j in range(noCoeffs):
                 poly[j] = poly[j] * deri[j]
-                
+
                 if(deri[j] > 0):
                     deri[j] = deri[j] - 1
         

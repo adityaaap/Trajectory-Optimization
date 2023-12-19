@@ -24,3 +24,11 @@ A plot of smoothened trajectory around the obstacle to the goal
 
 ![image](https://github.com/adityaaap/RRT_Star/blob/master/images/traj%20optim%20results%202.png)
 
+# MIT VNAV Course Lecture PDF
+Link - https://vnav.mit.edu/material/09-TrajectoryOptimization1-notes.pdf
+
+
+References:
+1. https://github.com/Mdhvince/UAV-Autonomous-control/tree/master
+2. https://ocw.mit.edu/courses/6-832-underactuated-robotics-spring-2009/resources/lecture-9-trajectory-optimization/
+

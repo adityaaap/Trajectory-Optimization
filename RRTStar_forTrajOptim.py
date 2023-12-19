@@ -269,23 +269,6 @@ class RRTStar:
                 print("iterations", i)
                 break
 
-                # if hasRewired and cost > old_cost:  # sanity check
-                #     raise Exception("Cost increased after rewiring")
-
-                # if cost < old_cost:
-                #     print("Iteration: {} | Cost: {}".format(i, cost))
-                #     self.store_best_tree()
-                #     old_cost = cost
-                #     self.dynamic_it_counter = 0
-                # else:
-                #     self.dynamic_it_counter += 1
-                #     print(
-                #         "\r Percentage to stop unless better path is found: {}%".format(
-                #             np.round(self.dynamic_it_counter / self.dynamic_break_at * 100, 2)), end="\t")
-
-                # if self.dynamic_it_counter >= self.dynamic_break_at:
-                #     break
-
         if not self.isPathFound(self.bestTree, self.currSample):# IF ITERATIONS COMPLETE AND THIS RUNS< IT WILL GIVE KEY ERROR> BECAUSE GOAL KEY DOESNOT EXIST IN THE TREE
             raise Exception("No path found")
 
@@ -298,6 +281,7 @@ class RRTStar:
         ax = fig.add_subplot(111, projection='3d')
         # tree = list(self.bestPath.values())  # Extract values from the dictionary
         tree = self.bestPath
+        print(self.bestPath)
         tree = np.array(tree) 
 
         # print(tree)
@@ -307,9 +291,9 @@ class RRTStar:
         z = tree[:, 2]
 
         # Plotting the points
-        # ax.scatter(x, y, z)
-        for i in range(len(tree) - 1):
-            ax.plot([x[i], x[i + 1]], [y[i], y[i + 1]], [z[i], z[i + 1]], color='blue')
+        ax.scatter(x, y, z, color='blue')
+        # for i in range(len(tree) - 1):
+        #     ax.plot([x[i], x[i + 1]], [y[i], y[i + 1]], [z[i], z[i + 1]], color='blue')
 
         # Set labels
         ax.set_xlabel('X axis')
@@ -321,6 +305,8 @@ class RRTStar:
 
 if __name__ == "__main__":
 
+    ## Can be used for unit Testing of Code
+
     start = np.array([0, 0, 0])
     goal = np.array([7.0*10, 7.0*10, 7.0*10]) # Dont keep goal as integer values
 
@@ -330,9 +316,9 @@ if __name__ == "__main__":
         space_limits,
         start=start,
         goal=goal,
-        max_distance=4,
+        max_distance=5,
         max_iterations=1000,
-        obstacles=None,
+        obstacles=[[15,55, 15,55, 15,55]],
     )
     rrt.run()
     rrt.plot()

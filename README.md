@@ -15,7 +15,7 @@ A scatter plot of the way points generated using RRT* algorithm
 
 ![image](https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning1.png)
 
-![image]((https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning%20results%202.png))
+![image](https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning%20results%202.png)
 
 # Results of Trajectory Optimization
 A plot of smoothened trajectory around the obstacle to the goal

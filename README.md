@@ -1,8 +1,11 @@
-# Path Planning and Trajectory Planning
+# Trajectory Optimization
 
-A RRT* alogorithm is used to generate waypoints which are then refrenced by Trajectory Optimization algorithm to generate smooth trajectories.
+# Introduction
+In this repository I have implemented a RRT* algorithm followed my trajectory optimization for generating smooth trajectories between waypoints
 
-The PDF in the repository shows the theory behind and code structure used for Trajectory Optimization.
+# Contents
+1. A RRT* alogorithm is used to generate waypoints which are then refrenced by Trajectory Optimization algorithm to generate smooth trajectories.
+2. The PDF in the repository shows the theory and code structure used for Trajectory Optimization.
 
 # How to Run
 Clone the repository and run

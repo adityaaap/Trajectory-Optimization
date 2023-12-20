@@ -5,7 +5,7 @@ In this repository I have implemented a RRT* algorithm followed my trajectory op
 
 # Contents
 1. A RRT* alogorithm is used to generate waypoints which are then refrenced by Trajectory Optimization algorithm to generate smooth trajectories.
-2. The PDF in the repository shows the theory and code structure used for Trajectory Optimization.
+2. The PDF in the repository shows the theory and code structure used for Trajectory Optimization. (link: https://github.com/adityaaap/Trajectory-Optimization/blob/master/Traj%20optim%20and%20RRT%20Star.pdf)
 
 # How to Run
 Clone the repository and run

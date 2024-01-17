@@ -33,6 +33,9 @@ Link - https://vnav.mit.edu/material/09-TrajectoryOptimization1-notes.pdf
 
 The PDF notes posted by me in the repo explain how the theory from above lecture has been used in this problem formulation and also the code structure associated with it
 
+# Current Work
+Working to improve the collision avoidance in trajectory optimization code.
+
 
 References:
 1. https://github.com/Mdhvince/UAV-Autonomous-control/tree/master

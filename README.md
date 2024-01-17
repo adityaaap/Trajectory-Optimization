@@ -16,7 +16,7 @@ python3 main.py
 # Results of Path Planning 
 A scatter plot of the way points generated using RRT* algorithm
 
-![image]([https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning1.png](https://github.com/adityaaap/Trajectory-Optimization/blob/master/images/pathPlanning1.png))
+![image]((https://github.com/adityaaap/Trajectory-Optimization/blob/master/images/pathPlanning1.png))
 
 ![image](https://github.com/adityaaap/RRT_Star/blob/master/images/pathPlanning%20results%202.png)
 
